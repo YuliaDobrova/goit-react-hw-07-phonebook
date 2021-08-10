@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "./FIlter.module.css";
 import { connect } from "react-redux";
-import { setFilter } from "../../redux/phonebook/phonebookActions";
+import { setFilter } from "../../redux/contacts/contactsActions";
+import { getFilter } from "../../redux/contacts/contactsSelectors";
 
 const Filter = ({ filter, setFilter }) => {
   return (
@@ -20,7 +21,7 @@ const Filter = ({ filter, setFilter }) => {
 };
 
 const mapStateToProps = (state) => ({
-  filter: state.filter,
+  filter: getFilter(state),
 });
 
 export default connect(mapStateToProps, { setFilter: setFilter })(Filter);

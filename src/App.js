@@ -16,16 +16,3 @@ const App = () => {
 };
 
 export default App;
-
-// ===============================================
-// <>
-// <h1 className="appHeading">Phonebook</h1>
-// <ContactForm addContact={this.addContact} />
-// <h2 className="appHeading">Contacts</h2>
-// <Filter value={this.state.filter} onFilter={this.onFilter} />
-// <ContactList
-//   contacts={this.filteredContacts()}
-//   addContact={this.addContact}
-//   removeContact={this.removeContact}
-// />
-// </>

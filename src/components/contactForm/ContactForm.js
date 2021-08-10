@@ -1,14 +1,16 @@
 import React, { Component } from "react";
-import {
-  addContact,
-  // deleteContact,
-} from "../../redux/phonebook/phonebookActions";
+import contactsOperations from "../../redux/contacts/contactsOperations";
 import { connect } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 import styles from "./ContactForm.module.css";
+import { getAllContacts, getLoading } from "../../redux/contacts/contactsSelectors";
 
 class ContactForm extends Component {
   state = { name: "", number: "" };
+
+  componentDidMount() {
+    this.props.fetchContacts();
+  }
 
   onHandleChange = (e) => {
     const { name, value } = e.target;
@@ -17,7 +19,7 @@ class ContactForm extends Component {
 
   onHandleSubmit = (e) => {
     e.preventDefault();
-    // console.log(`this.props.contacts`, this.props.contacts);
+    console.log(`this.props.contacts`, this.props.contacts);
     const addingContact = this.props.contacts.find(
       (contact) => contact.name.toLowerCase() === this.state.name.toLowerCase()
     );
@@ -25,7 +27,7 @@ class ContactForm extends Component {
       alert(`${this.state.name} is already in contacts`);
       return;
     }
-    this.props.addContact({ ...this.state, id: uuidv4() });
+    this.props.addContact({ ...this.state });
     this.setState({ name: "", number: "" });
   };
 
@@ -61,21 +63,28 @@ class ContactForm extends Component {
         <button type="submit" className={styles.formButton}>
           Add contact
         </button>
+        {this.props.isLoadingContacts && <h1>Downloading...</h1>}
       </form>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    contacts: state.items,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     contacts: state.items,
+//   };
+// };
+
+const mapStateToProps = (state) => ({
+  contacts: getAllContacts(state),
+  isLoadingContacts: getLoading(state),
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addContact: (newContact) => dispatch(addContact(newContact)),
-    // deleteContact: (id) => dispatch(deleteContact(id)),
+    fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
+    addContact: (newContact) =>
+      dispatch(contactsOperations.addContact(newContact)),
   };
 };
 

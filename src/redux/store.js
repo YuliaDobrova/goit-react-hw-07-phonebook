@@ -1,10 +1,7 @@
-// Создай хранилище и добавь инструменты разработчика
-// =============================================
-
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import {
-  persistStore,
-  persistReducer,
+  // persistStore,
+  // persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -12,8 +9,8 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import contactsReducer from "./phonebook/phonebookReducer";
+// import storage from "redux-persist/lib/storage";
+import contactsReducer from "./contacts/contactsReducer";
 
 const middleware = [
   ...getDefaultMiddleware({
@@ -23,44 +20,25 @@ const middleware = [
   }),
 ];
 
-const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["items"],
-};
-const rootReducer = contactsReducer;
+// const persistConfig = {
+//   key: "root",
+//   storage,
+//   whitelist: ["items"],
+// };
+// const rootReducer = contactsReducer;
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: contactsReducer,
   middleware,
   devTools: process.env.NODE_ENV === "development",
 });
 
-const persistor = persistStore(store);
-
-export default { store, persistor };
-
-// =============================================
-// const rootReducer = combineReducers({
-//   phonebook: persistReducer(persistConfig, contactsReducer),
-// });
-
-// const store = configureStore({
-//   reducer: rootReducer,
-//   middleware,
-//   devTools: process.env.NODE_ENV === "development",
-// });
-
 // const persistor = persistStore(store);
-// ================================================
-// REDUX
-// import { createStore } from "redux";
-// // import { combineReducers } from "redux";
-// import { composeWithDevTools } from "redux-devtools-extension";
-// import contactsReducer from "./phonebook/phonebookReducer";
 
-// const store = createStore(contactsReducer, composeWithDevTools());
+export default store;
 
-// export default store;
+// ===========================
+// json смотреть по ссылке
+// http://localhost:4040/contacts

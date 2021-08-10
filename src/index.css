@@ -3,3 +3,9 @@ body {
   color: white;
   margin: 0;
 }
+
+.appHeading {
+  padding-left: 10px;
+  color: white;
+  font-size: 28px;
+}
